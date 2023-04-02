@@ -353,5 +353,5 @@ def start():
 
 if __name__ == "__main__":
     prepare_environment()
-    if "--only-prepare" not in sys.argv:
+    if not args.only_prepare:
         start()
