@@ -440,6 +440,7 @@ def load_model(checkpoint_info=None, already_loaded_state_dict=None, time_taken_
     sd_model.used_config = checkpoint_config
 
     timer.record("create model")
+    print("Loading model weights")
 
     load_model_weights(sd_model, checkpoint_info, state_dict, timer)
 
@@ -449,10 +450,12 @@ def load_model(checkpoint_info=None, already_loaded_state_dict=None, time_taken_
         sd_model.to(shared.device)
 
     timer.record("move model to device")
+    print("Moving to device")
 
     sd_hijack.model_hijack.hijack(sd_model)
 
     timer.record("hijack")
+    print("Loading TI Embeddings")
 
     sd_model.eval()
     shared.sd_model = sd_model
