@@ -23,8 +23,9 @@ fi
 # Install directory without trailing slash
 if [[ -z "${install_dir}" ]]
 then
-    install_dir="/root/"
+    install_dir="."
 fi
+install_dir=$(realpath "$install_dir")
 
 # Name of the subdirectory (defaults to stable-diffusion-webui)
 if [[ -z "${clone_dir}" ]]
