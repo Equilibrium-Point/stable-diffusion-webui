@@ -253,6 +253,9 @@ def prepare_environment():
     print(f"Python {sys.version}")
     print(f"Commit hash: {commit}")
 
+    if not is_installed("markupsafe"):
+        run(f'"{python}" -m pip install markupsafe==2.0.1')
+
     if args.reinstall_torch or not is_installed("torch") or not is_installed("torchvision"):
         run(f'"{python}" -m {torch_command}', "Installing torch and torchvision", "Couldn't install torch", live=True)
 
@@ -347,11 +350,14 @@ def start():
     import webui
     if '--nowebui' in sys.argv:
         webui.api_only()
+    if "--only-prepare-init" in sys.argv:
+        webui.initialize()
+        print("Finished preparing")
     else:
         webui.webui()
 
 
 if __name__ == "__main__":
     prepare_environment()
-    if not args.only_prepare:
+    if not '--only-prepare' in sys.argv:
         start()
